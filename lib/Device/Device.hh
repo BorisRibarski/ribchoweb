@@ -3,6 +3,7 @@
 #include <esp_now.h>
 
 #include <functional>
+#include <vector>
 
 class device {
   public:
@@ -11,11 +12,8 @@ class device {
     using recv_cb = void (*)(const unsigned char *, const uint8_t *, int);
 
   protected:
-    void logOnError(esp_err_t, const char *);
+    static std::vector<esp_now_peer_info_t> peers;
+
     virtual send_cb get_send_cb() = 0;
     virtual recv_cb get_recv_cb() = 0;
-    virtual void add_peers() = 0;
-    // instead of virtual function leave static vector
-    // the implementor of the child class will have to
-    // defined it, and in begin for loop and go to RAVE
 };

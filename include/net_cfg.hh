@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstring>
 
 #include "utils.hh"
 
@@ -84,7 +85,8 @@ static esp_now_peer_info_t make_peer_info(const char *lmk, dev_type type) {
     esp_now_peer_info_t peerInfo = {};
     peerInfo.channel = 1;
     peerInfo.encrypt = true;
-    memcpy(peerInfo.lmk, lmk, 16);
-    memcpy(peerInfo.peer_addr, get_mac(type).addr, 6);
+    std::memcpy(peerInfo.lmk, lmk, 16);
+    std::memcpy(peerInfo.peer_addr, get_mac(type).addr, 6);
+    return peerInfo;
 }
 } // namespace net

@@ -1,12 +1,6 @@
 #include "controller.hh"
 
-#include <Arduino.h>
-#include <WiFi.h>
-#include <esp_now.h>
-
 #include "Logger.h"
-
-#include <net_cfg.hh>
 
 device::send_cb controller_t::get_send_cb() {
     return [](const uint8_t *, esp_now_send_status_t status) {
@@ -24,16 +18,6 @@ device::recv_cb controller_t::get_recv_cb() {
         };
 }
 
-void controller_t::add_peers() {
-    esp_now_peer_info_t peerInfo = {};
-    peerInfo.channel = 1;
-    peerInfo.encrypt = true;
-    memcpy(peerInfo.lmk, LMK_RC, 16);
-    memcpy(peerInfo.peer_addr, net::web::get_mac_router().addr, 6);
-
-    if (esp_now_add_peer(&peerInfo) == ESP_OK) {
-        Logger::log("Router registered "
-                    "with encrypted "
-                    "hardware filter.");
-    }
-}
+std::vector<esp_now_peer_info_t> device::peers = {
+    net::make_peer_info(LMK_RC, net::dev_type::ROUTER),
+};

@@ -19,3 +19,23 @@ void Logger::logf(const char *format, ...) {
 
     log(buffer);
 }
+
+void Logger::logError(esp_err_t err) {
+    Logger::log(esp_err_to_name(err));
+}
+
+void Logger::logOnError(esp_err_t err, const char *msg) {
+    if (err != ESP_OK) {
+        Logger::log(msg);
+    }
+}
+void Logger::logOnOK(esp_err_t err, const char *msg) {
+    if (err == ESP_OK) {
+        Logger::log(msg);
+    }
+}
+void Logger::logOnStatus(esp_err_t err,
+                         const char *msgOK,
+                         const char *msgError) {
+    Logger::log(err == ESP_OK ? msgOK : msgError);
+}

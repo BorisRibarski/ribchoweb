@@ -1,7 +1,3 @@
-#include <Arduino.h>
-#include <WiFi.h>
-#include <esp_now.h>
-
 #include <Logger.h>
 
 #include "executor.hh"
@@ -13,16 +9,11 @@ void setup() {
 }
 
 void loop() {
-    net::msg_t myData;
-    myData.b = random(1, 100);
+    net::msg_t myData = {2};
 
     esp_err_t result = executor.sendToRouter(&myData);
 
-    if (result == ESP_OK) {
-        Logger::log("Sent successfully");
-    } else {
-        Logger::log("Error sending data");
-    }
+    Logger::logOnStatus(result, "Sent successfully", "Error sending data");
 
-    delay(2000);
+    delay(5000);
 }

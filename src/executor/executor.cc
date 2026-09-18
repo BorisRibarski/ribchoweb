@@ -1,12 +1,6 @@
 #include "executor.hh"
 
-#include <Arduino.h>
-#include <WiFi.h>
-#include <esp_now.h>
-
 #include "Logger.h"
-
-#include <net_cfg.hh>
 
 device::send_cb executor_t::get_send_cb() {
     return [](const uint8_t *, esp_now_send_status_t status) {
@@ -24,10 +18,6 @@ device::recv_cb executor_t::get_recv_cb() {
         };
 }
 
-void executor_t::add_peers() {
-    esp_now_peer_info_t peerInfo =
-        net::make_peer_info(LMK_RE, net::dev_type::ROUTER);
-
-    logOnError(esp_now_add_peer(&peerInfo),
-               "Router registered with encrypted hardware filter.");
-}
+std::vector<esp_now_peer_info_t> device::peers = {
+    net::make_peer_info(LMK_RE, net::dev_type::ROUTER),
+};
