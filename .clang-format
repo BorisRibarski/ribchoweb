@@ -1,0 +1,15 @@
+---
+Language: Cpp
+IndentWidth: 4
+UseTab: Never
+BreakBeforeTernaryOperators: true
+ColumnLimit: 75
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: WithoutElse
+BreakBeforeBraces: Attach
+FixNamespaceComments: true
+NamespaceIndentation: Inner
+AccessModifierOffset: -2
