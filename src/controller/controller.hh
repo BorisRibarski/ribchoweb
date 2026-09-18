@@ -6,6 +6,6 @@
 
 class controller_t : public device, public RibchoClient {
   private:
-    send_cb get_send_cb();
-    recv_cb get_recv_cb();
+    send_cb get_send_cb() override;
+    recv_cb get_recv_cb() override;
 };

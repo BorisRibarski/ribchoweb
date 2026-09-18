@@ -4,10 +4,12 @@
 
 controller_t controller;
 
+// cppcheck-suppress unusedFunction
 void setup() {
     controller.begin();
 }
 
+// cppcheck-suppress unusedFunction
 void loop() {
     net::msg_t myData = {1};
 

@@ -6,12 +6,15 @@
 class Base {
   protected:
     esp_err_t send(net::mac_t mac, net::msg_t *data) {
-        return esp_now_send(mac.addr, (uint8_t *)data, sizeof(data));
+        return esp_now_send(
+            mac.addr, reinterpret_cast<uint8_t *>(data), sizeof(data));
     }
 };
 
 class RibchoServer : Base {
   public:
+    // FutureFeature think for methods for more than one executor and
+    // trigger
     esp_err_t sendToController(net::msg_t *data) {
         return send(net::web::get_mac_controller(), data);
     }

@@ -4,10 +4,12 @@
 
 router_t router;
 
+// cppcheck-suppress unusedFunction
 void setup() {
     router.begin();
 }
 
+// cppcheck-suppress unusedFunction
 void loop() {
     net::msg_t myData = {4};
 

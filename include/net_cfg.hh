@@ -14,12 +14,6 @@ struct msg_t {
 };
 class web {
   public:
-    const mac_t mac_cont = get_mac_controller();
-    const mac_t mac_exec = get_mac_executor();
-    const mac_t mac_rout = get_mac_router();
-    const mac_t mac_trig = get_mac_trigger();
-
-  public: // Remove public:
     static mac_t get_mac_router() {
         mac_t ret{};
         util::parse_mac_string(MAC_ROUTER, ret.addr);
@@ -42,11 +36,6 @@ class web {
     }
 };
 enum class dev_type {
-    // BUG
-    // FIXME
-    // todo
-    //  Note
-    //  warning
     CONTROLLER,
     EXECUTOR,
     ROUTER,

@@ -2,6 +2,7 @@
 
 #include "Logger.h"
 
+// cppcheck-suppress unusedFunction
 device::send_cb executor_t::get_send_cb() {
     return [](const uint8_t *, esp_now_send_status_t status) {
         Logger::logf("Send Status: %s",
@@ -9,6 +10,7 @@ device::send_cb executor_t::get_send_cb() {
                                                     : "Failed");
     };
 }
+// cppcheck-suppress unusedFunction
 device::recv_cb executor_t::get_recv_cb() {
     return
         [](const unsigned char *, const uint8_t *incomingData, int len) {

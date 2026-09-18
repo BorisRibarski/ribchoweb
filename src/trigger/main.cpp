@@ -4,10 +4,12 @@
 
 trigger_t trigger;
 
+// cppcheck-suppress unusedFunction
 void setup() {
     trigger.begin();
 }
 
+// cppcheck-suppress unusedFunction
 void loop() {
     net::msg_t myData = {3};
 

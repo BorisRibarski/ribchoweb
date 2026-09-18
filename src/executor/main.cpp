@@ -4,10 +4,12 @@
 
 executor_t executor;
 
+// cppcheck-suppress unusedFunction
 void setup() {
     executor.begin();
 }
 
+// cppcheck-suppress unusedFunction
 void loop() {
     net::msg_t myData = {2};
 
