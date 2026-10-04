@@ -16,19 +16,19 @@ class RibchoServer : Base {
     // FutureFeature think for methods for more than one executor and
     // trigger
     esp_err_t sendToController(net::msg_t *data) {
-        return send(net::web::get_mac_controller(), data);
+        return send(net::get_mac_controller(), data);
     }
     esp_err_t sendToExecutor(net::msg_t *data) {
-        return send(net::web::get_mac_executor(), data);
+        return send(net::get_mac_executor(), data);
     }
     esp_err_t sendToTrigger(net::msg_t *data) {
-        return send(net::web::get_mac_trigger(), data);
+        return send(net::get_mac_trigger(), data);
     }
 };
 
 class RibchoClient : Base {
   public:
     esp_err_t sendToRouter(net::msg_t *data) {
-        return send(net::web::get_mac_router(), data);
+        return send(net::get_mac_router(), data);
     }
 };

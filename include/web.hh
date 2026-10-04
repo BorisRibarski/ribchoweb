@@ -1,19 +1,10 @@
 #pragma once
 
-#include <cstdint>
 #include <cstring>
 
 #include "esp_now.h"
 
-#include "utils.hh"
-
-namespace net {
-struct mac_t {
-    uint8_t addr[6];
-};
-struct msg_t {
-    int b;
-};
+namespace web {
 static mac_t get_mac_controller() {
     mac_t ret{};
     util::parse_mac_string(MAC_Controller, ret.addr);
@@ -34,41 +25,6 @@ static mac_t get_mac_trigger() {
     util::parse_mac_string(MAC_TRIGGER, ret.addr);
     return ret;
 }
-enum class dev_type {
-    CONTROLLER,
-    EXECUTOR,
-    ROUTER,
-    TRIGGER,
-};
-// FutureFeature more than one system
-enum class system {
-    Power_windows,
-    Central_locking,
-    Lights,
-};
-// FutureFeature add location of device
-enum class location {
-    FrontLeft,
-    FrontRight,
-    RearLeft,
-    RearRight,
-    Central,
-};
-static mac_t get_mac(dev_type type) {
-    switch (type) {
-    case dev_type::CONTROLLER:
-        return get_mac_controller();
-    case dev_type::EXECUTOR:
-        return get_mac_executor();
-    case dev_type::ROUTER:
-        return get_mac_router();
-    case dev_type::TRIGGER:
-        return get_mac_trigger();
-
-    default:
-        return {};
-    }
-}
 static esp_now_peer_info_t make_peer_info(const char *lmk, dev_type type) {
     esp_now_peer_info_t peerInfo = {};
     peerInfo.channel = 1;
@@ -77,4 +33,4 @@ static esp_now_peer_info_t make_peer_info(const char *lmk, dev_type type) {
     std::memcpy(peerInfo.peer_addr, get_mac(type).addr, 6);
     return peerInfo;
 }
-} // namespace net
+} // namespace web
