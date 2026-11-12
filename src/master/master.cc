@@ -38,6 +38,17 @@ void master_t::proceed_events() {
             NewPeer peer = std::get<NewPeer>(e);
 
             set_slave(peer.addr);
+        } else if (std::holds_alternative<Input>(e)) {
+            Input in = std::get<Input>(e);
+
+            Logger::logf("Value: %d", in.on);
+
+            if (in.on) {
+                esp_now_mgr.send(slave_mac, "VALUE:1", 64);
+            } else {
+                esp_now_mgr.send(slave_mac, "VALUE:0", 64);
+            }
+
         } else if (std::holds_alternative<IMessage>(e)) {
 
             IMessage msg = std::get<IMessage>(e);
@@ -54,9 +65,16 @@ void master_t::proceed_events() {
 void master_t::onRecvImpl(const esp_now_recv_info_t* info,
                           const uint8_t* data,
                           int data_len) {
+    Logger::log("Receive");
     IMessage m;
     memcpy(m.text, data, 64);
     event_queue.push(m);
+    Logger::log(m.text);
+    if (strcmp(m.text, "VALUE:1") == 0) {
+        push_Input(true);
+    } else if (strcmp(m.text, "VALUE:0") == 0) {
+        push_Input(false);
+    }
 
     if (check_broadcast(info->des_addr)) {
         Logger::log("Seeker");
@@ -106,4 +124,9 @@ void master_t::push_OMsg(const char* text) {
     OMessage msg;
     strcpy(msg.text, text);
     event_queue.push(msg);
+}
+void master_t::push_Input(bool v) {
+    Input in;
+    in.on = v;
+    event_queue.push(in);
 }

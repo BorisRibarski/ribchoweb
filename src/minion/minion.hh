@@ -3,6 +3,7 @@
 #include <esp_now.h>
 
 #include <cstdint>
+#include <cstring>
 
 #include <event.hh>
 
@@ -26,7 +27,7 @@ class minion_t {
         if (!master_found()) {
             find_master();
         }
-        proceed_inc();
+        proceed_events();
     }
 
   private:
@@ -46,5 +47,7 @@ class minion_t {
                     int data_len);
     void push_NewPeer(uint8_t* mac);
     void push_IMsg(const char* text);
+
+  public:
     void push_OMsg(const char* text);
 };

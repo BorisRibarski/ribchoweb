@@ -42,4 +42,5 @@ class master_t {
     void push_NewPeer(uint8_t* mac);
     void push_IMsg(const char* text);
     void push_OMsg(const char* text);
+    void push_Input(bool);
 };

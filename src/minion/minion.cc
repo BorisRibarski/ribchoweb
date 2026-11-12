@@ -62,7 +62,12 @@ void minion_t::proceed_events() {
         } else if (std::holds_alternative<OMessage>(e)) {
             OMessage msg = std::get<OMessage>(e);
 
-            esp_now_mgr.send(master_mac, msg.text, 64);
+            if (strcmp(DEVICE_NAME, "READER") == 0) {
+                Logger::log(msg.text);
+                esp_now_mgr.send(master_mac, msg.text, 64);
+            } else {
+                esp_now_mgr.send(master_mac, msg.text, 64);
+            }
         }
     }
 }
@@ -74,6 +79,11 @@ void minion_t::onRecvImpl(const esp_now_recv_info_t* info,
     IMessage msg;
     memcpy(msg.text, data, 64);
     event_queue.push(msg);
+    if (strcmp(msg.text, "VALUE:1") == 0) {
+        digitalWrite(8, HIGH);
+    } else if (strcmp(msg.text, "VALUE:0") == 0) {
+        digitalWrite(8, LOW);
+    }
     if (check_broadcast(info->des_addr)) {
         Logger::log("Error DST broadcast");
         return;

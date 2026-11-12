@@ -2,7 +2,9 @@
 
 void Logger::begin(unsigned long baud) {
     Serial.begin(baud);
-    delay(2000);
+    while (!Serial) {
+        delay(10); // Wait in 10ms increments
+    }
     Serial.printf("[%s] Online\n", DEVICE_NAME);
 }
 
