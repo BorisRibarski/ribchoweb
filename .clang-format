@@ -13,3 +13,5 @@ BreakBeforeBraces: Attach
 FixNamespaceComments: true
 NamespaceIndentation: Inner
 AccessModifierOffset: -2
+BreakTemplateDeclarations: Yes
+PointerAlignment: Left

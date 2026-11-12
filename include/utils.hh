@@ -2,8 +2,10 @@
 
 #include <stdio.h>
 
+/* consider if it's needed */
+
 namespace util {
-inline bool parse_mac_string(const char *mac_str, uint8_t *mac_array) {
+inline bool parse_mac_string(const char* mac_str, uint8_t* mac_array) {
     if (mac_str == NULL) return false;
     unsigned int bytes[6];
     if (sscanf(mac_str,

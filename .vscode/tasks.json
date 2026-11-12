@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Monitor",
+      "type": "shell",
+      "command": "eval multitail $(printf -- '-L \"tio /dev/ttyACM%d\" ' {0..3})",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+    },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      }
+    }
+  ]
+}
