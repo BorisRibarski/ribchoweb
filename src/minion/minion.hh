@@ -3,9 +3,8 @@
 #include <esp_now.h>
 
 #include <cstdint>
+
 #include <event.hh>
-#include <queue>
-#include <variant>
 
 #include "ESP_NOW_Manager.hh"
 
@@ -42,7 +41,6 @@ class minion_t {
             instance->onRecvImpl(info, data, data_len);
         }
     }
-
     void onRecvImpl(const esp_now_recv_info_t* info,
                     const uint8_t* data,
                     int data_len);

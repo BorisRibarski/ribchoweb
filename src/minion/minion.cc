@@ -1,7 +1,5 @@
 #include "minion.hh"
 
-#include <WiFi.h>
-
 #include "Logger.hh"
 
 bool check_broadcast(const uint8_t* addr) {
@@ -76,13 +74,6 @@ void minion_t::onRecvImpl(const esp_now_recv_info_t* info,
     IMessage m;
     memcpy(m.text, data, 64);
     event_queue.push(m);
-    Logger::logf("SRC Mac: %2X:%2X:%2X:%2X:%2X:%2X.",
-                 info->src_addr[0],
-                 info->src_addr[1],
-                 info->src_addr[2],
-                 info->src_addr[3],
-                 info->src_addr[4],
-                 info->src_addr[5]);
     if (check_broadcast(info->des_addr)) {
         Logger::log("Error DST broadcast");
         return;
