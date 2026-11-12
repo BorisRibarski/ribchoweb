@@ -34,19 +34,16 @@ void master_t::proceed_events() {
         event_queue.pop();
 
         if (std::holds_alternative<NewPeer>(e)) {
-            Logger::log("Event: NewPeer");
 
             NewPeer peer = std::get<NewPeer>(e);
 
             set_slave(peer.addr);
         } else if (std::holds_alternative<IMessage>(e)) {
-            Logger::log("Event: Imessage");
 
             IMessage msg = std::get<IMessage>(e);
 
             Logger::logf("Got Message: %s", msg.text);
         } else if (std::holds_alternative<OMessage>(e)) {
-            Logger::log("Event: OMessage");
 
             OMessage msg = std::get<OMessage>(e);
 

@@ -1,4 +1,4 @@
-# RibchoWeb
+# RibchoWeb (outdated)
 
 Compact ESP project using PlatformIO. Provides networking, routing, and trigger/executor components for embedded web-based control.
 
