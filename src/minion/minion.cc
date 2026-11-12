@@ -46,19 +46,19 @@ void minion_t::set_master(uint8_t* addr) {
     esp_now_mgr.add_peer(master_mac);
 }
 
-void minion_t::proceed_inc() {
+void minion_t::proceed_events() {
     while (event_queue.size()) {
         event e = event_queue.front();
         event_queue.pop();
 
         if (std::holds_alternative<NewPeer>(e)) {
-            NewPeer mf = std::get<NewPeer>(e);
+            NewPeer peer = std::get<NewPeer>(e);
 
-            set_master(mf.addr);
+            set_master(peer.addr);
         } else if (std::holds_alternative<IMessage>(e)) {
-            IMessage m = std::get<IMessage>(e);
+            IMessage msg = std::get<IMessage>(e);
 
-            Logger::logf("Got Message: %s", m.text);
+            Logger::logf("Got Message: %s", msg.text);
         } else if (std::holds_alternative<OMessage>(e)) {
             OMessage msg = std::get<OMessage>(e);
 
@@ -71,9 +71,9 @@ void minion_t::onRecvImpl(const esp_now_recv_info_t* info,
                           const uint8_t* data,
                           int data_len) {
     // Left like that because other order in future
-    IMessage m;
-    memcpy(m.text, data, 64);
-    event_queue.push(m);
+    IMessage msg;
+    memcpy(msg.text, data, 64);
+    event_queue.push(msg);
     if (check_broadcast(info->des_addr)) {
         Logger::log("Error DST broadcast");
         return;

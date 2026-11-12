@@ -21,7 +21,7 @@ class minion_t {
     void begin();
     void find_master();
     bool master_found();
-    void proceed_inc();
+    void proceed_events();
     void loop() {
         if (!master_found()) {
             find_master();
